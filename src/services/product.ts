@@ -19,6 +19,8 @@ export async function createProduct(body:{name:string,description:string,img:str
 
 export async function updateProduct(body:{name:string,description:string,img:string,id:string},id:string){
     try{
+        console.log(body)
+        delete body["_id"]
         return await updateProductRepository(body,id)
     }
     catch (e) {

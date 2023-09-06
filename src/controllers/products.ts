@@ -4,9 +4,26 @@ import {deleteProductRepository, getProductByIdRepository} from "../repository/p
 
 export  const router:Router=express.Router();
 
+router.put("/:id",async function (req:Request,res:Response) {
+    try{
+        const {id}=req.params
+        return res.json(await updateProduct(req.body,id))
+    }
+    catch (e) {
+        res.json(e).status(404)
+        throw e
+    }
+})
+
 router.post("/",async function (req:Request,res:Response) {
       try{
           console.log(req.body)
+          if (req.body.update){
+              const {id}=req.params
+              const {name,description,img} = req.body
+              return res.json(await updateProduct(req.body,id))
+          }
+          console.log(req.body,"zzzz")
               const {name,description,img} = req.body
              return res.json(await createProduct({name,description,img}))
       }
@@ -15,7 +32,7 @@ router.post("/",async function (req:Request,res:Response) {
 
                 throw e
       }
-         })
+})
 
 router.get("/",async function (req:Request,res:Response) {
     try{
@@ -50,14 +67,3 @@ router.delete("/:id",async function (req:Request,res:Response) {
     }
 })
 
-router.put("/:id",async function (req:Request,res:Response) {
-    try{
-        const {id}=req.params
-        const {name,description,img} = req.body
-        return res.json(await updateProduct(req.body,id))
-    }
-    catch (e) {
-        res.json(e).status(404)
-        throw e
-    }
-})
