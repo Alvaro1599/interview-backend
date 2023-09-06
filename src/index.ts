@@ -19,7 +19,9 @@ export class App{
         this.app.use(express.urlencoded({extended:true}))
         this.database.init();
         this.app.use("/product",router)
-        this.app.use(cors())
+        this.app.use(cors({
+            origin:"*"
+        }))
     }
 
     private configPort(){

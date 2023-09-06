@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {
     createProductRepository,
     deleteProductRepository,
-    getProductByIdRepository,
+    getProductByIdRepository, getProductsRepository,
     updateProductRepository
 } from "../repository/product";
 
@@ -43,6 +43,17 @@ export async function getProductById(body:{id:string}){
     try{
         const {id} = body
         return await getProductByIdRepository(id)
+    }
+    catch (e) {
+        throw e
+    }
+
+}
+
+
+export async function getProducts (){
+    try{
+        return await getProductsRepository();
     }
     catch (e) {
         throw e

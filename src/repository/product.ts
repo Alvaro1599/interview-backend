@@ -65,3 +65,15 @@ export async function getProductByIdRepository(id:string){
     }
 
 }
+
+export async function getProductsRepository(){
+    try{
+        const product =Database.instance.collection<ProductI>("Product");
+        const data= await product.find({});
+        return data.toArray()
+    }
+    catch (e) {
+        throw e
+    }
+
+}

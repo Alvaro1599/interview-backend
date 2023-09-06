@@ -1,11 +1,12 @@
 import express, {Express, Request, Response, Router} from "express";
-import {createProduct, deleteProduct, getProductById, updateProduct} from "../services/product";
+import {createProduct, deleteProduct, getProductById, getProducts, updateProduct} from "../services/product";
 import {deleteProductRepository, getProductByIdRepository} from "../repository/product";
 
 export  const router:Router=express.Router();
 
 router.post("/",async function (req:Request,res:Response) {
       try{
+          console.log(req.body)
               const {name,description,img} = req.body
              return res.json(await createProduct({name,description,img}))
       }
@@ -16,17 +17,26 @@ router.post("/",async function (req:Request,res:Response) {
       }
          })
 
+router.get("/",async function (req:Request,res:Response) {
+    try{
+        return res.json(await getProducts())
+    }
+    catch (e) {
+        res.json(e).status(404)
+    }
+})
+
 router.get("/:id",async function (req:Request,res:Response) {
     try{
-        console.log("req",req.params)
         const {id} = req.params
-        console.log(id)
         return res.json(await getProductById({id}))
     }
     catch (e) {
         res.json(e).status(404)
     }
 })
+
+
 
 router.delete("/:id",async function (req:Request,res:Response) {
     try{
